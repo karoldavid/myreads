@@ -16,7 +16,11 @@ class BooksApp extends React.Component {
   }
   updateQuery = (query) => {
     this.setState({query: query})
-    this.searchBooks(query)
+    if (query) {
+      this.searchBooks(query)
+    } else {
+      this.setState({books: []})
+    }
   }
   searchBooks(query) { 
     BooksAPI.search(query, 10).then((books) => {
