@@ -11,10 +11,18 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
     showSearchPage: true,
-    query: ''
+    query: '',
+    books: []
   }
   updateQuery = (query) => {
     this.setState({query: query})
+    this.searchBooks(query)
+  }
+  searchBooks(query) { 
+    BooksAPI.search(query, 10).then((books) => {
+      console.log(books)
+      this.setState({books: books})
+    })
   }
   render() {
     return (
@@ -37,7 +45,11 @@ class BooksApp extends React.Component {
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <ol className="books-grid">
+                { this.state.books.map((book, index) => (
+                    <li key={index}>{book.title}</li>
+                ))}
+              </ol>
             </div>
           </div>
         ) : (
