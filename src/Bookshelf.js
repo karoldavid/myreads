@@ -17,15 +17,15 @@ class Bookshelf extends Component {
             	{ shelves.map((shelf, index) => (
               <div key={index}>
                 <div className="bookshelf">
-                  <h2 className="bookshelf-title">{shelf}</h2>
+                  <h2 className="bookshelf-title">{Object.values(shelf)[0]}</h2>
                   <div className="bookshelf-books">
                     <ol className="books-grid">
-                    { reads.filter(read => read.shelf === shelf).map((read, index) => (
+                    { reads.filter(read => read.shelf === Object.keys(shelf)[0]).map((read, index) => (
                       <li key={index}>
                         <div className="book">
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${read.backgroundImage}` }}></div>
-                            <DropDownSelect/>
+                            <DropDownSelect selected={read.shelf}/>
                           </div>
                           <div className="book-title">{read.title}</div>
                           <div className="book-authors">{read.authors}</div>

@@ -4,7 +4,7 @@ import React, { Component } from 'react'
 class DropDownSelect extends Component {
 
 	state = {
-		value: 'currentlyReading'
+		value: this.props.selected
 	}
 
 	handleChange(event) {
@@ -12,6 +12,7 @@ class DropDownSelect extends Component {
 	}
 
 	render() {
+		console.log(this.state.value)
 		return  (<div className="book-shelf-changer">
         	<select value={this.state.value} onChange={(event) => this.handleChange(event)}>
             	<option value="none" disabled>Move to...</option>
