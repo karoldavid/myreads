@@ -3,6 +3,10 @@ import DropDownSelect from './DropDownSelect'
 
 class Bookshelf extends Component {
 
+	changeCategory(category, title) {
+		this.props.onChangeCategory(category, title)
+	}
+
 	render() {
 
 		const { reads, shelves } = this.props
@@ -25,7 +29,9 @@ class Bookshelf extends Component {
                         <div className="book">
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${read.backgroundImage}` }}></div>
-                            <DropDownSelect selected={read.shelf}/>
+                            <DropDownSelect category={read.shelf} title={read.title} onChangeCategory={(category, title) => {
+        						this.changeCategory(category, title)
+        					}}/>
                           </div>
                           <div className="book-title">{read.title}</div>
                           <div className="book-authors">{read.authors}</div>

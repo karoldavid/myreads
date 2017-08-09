@@ -81,6 +81,12 @@ class BooksApp extends React.Component {
       this.setState({books: []})
     }
   }
+
+  updateReads(category, title) {
+    this.state.reads.filter((r) => r.title === title).map((r) => r.shelf = category);
+    this.setState({ reads: this.state.reads })
+  }
+
   render() {
     return (
       <div className="app">
@@ -95,6 +101,9 @@ class BooksApp extends React.Component {
         <Bookshelf
           shelves={this.state.shelves}
           reads={this.state.reads}
+          onChangeCategory={(category, index) => {
+            this.updateReads(category, index)
+          }}
         />
         )
       }

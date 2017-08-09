@@ -4,15 +4,18 @@ import React, { Component } from 'react'
 class DropDownSelect extends Component {
 
 	state = {
-		value: this.props.selected
+		value: this.props.category,
+		title: this.props.title
 	}
 
 	handleChange(event) {
-		this.setState({value: event.target.value});
+	//	this.setState({value: event.target.value});
+		if (this.props.onChangeCategory)
+			//this.props.read.shelf = event.target.value
+			this.props.onChangeCategory(event.target.value, this.props.title)
 	}
 
 	render() {
-		console.log(this.state.value)
 		return  (<div className="book-shelf-changer">
         	<select value={this.state.value} onChange={(event) => this.handleChange(event)}>
             	<option value="none" disabled>Move to...</option>
