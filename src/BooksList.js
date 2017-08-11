@@ -1,5 +1,6 @@
 import React, { Component} from 'react'
 import { Link } from 'react-router-dom'
+import DropDownSelect from './DropDownSelect'
 
 class BooksList extends Component {
 	state = {
@@ -9,7 +10,11 @@ class BooksList extends Component {
   	updateQuery = (query) => {
   		this.setState({query: query})
 	    this.props.onSearchBooks(query)
-	 }
+	}
+
+	addToReads(category, title) {
+		this.props.onAddToReads(category, title)
+	}
 
 	render() {
 
@@ -39,15 +44,9 @@ class BooksList extends Component {
 	                        <div className="book">
 	                          <div className="book-top">
 	                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-	                            <div className="book-shelf-changer">
-	                              <select>
-	                                <option value="none" disabled>Move to...</option>
-	                                <option value="currentlyReading">Currently Reading</option>
-	                                <option value="wantToRead">Want to Read</option>
-	                                <option value="read">Read</option>
-	                                <option value="none">None</option>
-	                              </select>
-	                            </div>
+	                            <DropDownSelect category={"none"} title={book.title} onAddToReads={(category, title) => {
+        							this.addToReads(category, title)
+        						}}/>
 	                          </div>
 	                          <div className="book-title">{book.title}</div>
 	                          <div className="book-authors">{book.authors}</div>

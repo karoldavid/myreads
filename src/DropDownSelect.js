@@ -13,6 +13,8 @@ class DropDownSelect extends Component {
 		if (this.props.onChangeCategory)
 			//this.props.read.shelf = event.target.value
 			this.props.onChangeCategory(event.target.value, this.props.title)
+		if (this.props.onAddToReads)
+			this.props.onAddToReads(event.target.value, this.props.title)
 	}
 
 	render() {

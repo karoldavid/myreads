@@ -66,8 +66,7 @@ class BooksApp extends React.Component {
       { "read": "Read" }
     ],
     books: [],
-    reads: myReads,
-    screen: 'shelves'
+    reads: myReads
   }
 
   searchBooks(query) {
@@ -90,6 +89,16 @@ class BooksApp extends React.Component {
     this.setState({ reads: this.state.reads })
   }
 
+  addToReads(category, title) {
+    var selected = this.state.books.filter((r) => r.title === title)[0];
+
+    var book = { "shelf": category, "title": selected.title, "authors" : selected.authors, "backgroundImage": selected.imageLinks.thumbnail} 
+
+    this.setState(state => ({
+        reads: state.reads.concat([ book ])
+      }))
+  }
+
   render() {
     return (
       <div className="app">
@@ -97,17 +106,20 @@ class BooksApp extends React.Component {
           <Bookshelf
             shelves={this.state.shelves}
             reads={this.state.reads}
-            onChangeCategory={(category, index) => {
-              this.updateReads(category, index)
+            onChangeCategory={(category, title) => {
+              this.updateReads(category, title)
             }}
           />
         )}/>
         <Route path="/search" render={() => (
           <BooksList
             onSearchBooks={(query) => {
-              this.searchBooks(query)}
-            }
+              this.searchBooks(query)
+            }}
             books={this.state.books}
+            onAddToReads={(category, title) => {
+              this.addToReads(category, title)
+            }}
           />
         )}/>
       </div>
