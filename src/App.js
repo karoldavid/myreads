@@ -1,4 +1,5 @@
 import React from 'react'
+import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BooksList from './BooksList'
 import Bookshelf from './Bookshelf'
@@ -58,15 +59,17 @@ class BooksApp extends React.Component {
      * pages, as well as provide a good URL they can bookmark and share.
      */
    // showSearchPage: true,
-    showSearchPage: false,
+    //showSearchPage: false,
     shelves: [
       { "currentlyReading": "Currently Reading" },
       { "wantToRead": "Want to Read" },
       { "read": "Read" }
     ],
     books: [],
-    reads: myReads
+    reads: myReads,
+    screen: 'shelves'
   }
+
   searchBooks(query) {
     if (query) {
       BooksAPI.search(query, 10).then((books) => {
@@ -90,23 +93,23 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-        {this.state.showSearchPage ? (
+        <Route exact path="/" render={() => (
+          <Bookshelf
+            shelves={this.state.shelves}
+            reads={this.state.reads}
+            onChangeCategory={(category, index) => {
+              this.updateReads(category, index)
+            }}
+          />
+        )}/>
+        <Route path="/search" render={() => (
           <BooksList
             onSearchBooks={(query) => {
               this.searchBooks(query)}
             }
             books={this.state.books}
           />
-        ) : (
-        <Bookshelf
-          shelves={this.state.shelves}
-          reads={this.state.reads}
-          onChangeCategory={(category, index) => {
-            this.updateReads(category, index)
-          }}
-        />
-        )
-      }
+        )}/>
       </div>
     )
   }
