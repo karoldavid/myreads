@@ -66,7 +66,17 @@ class BooksApp extends React.Component {
       { "read": "Read" }
     ],
     books: [],
-    reads: myReads
+    reads: []
+  }
+
+  componentDidMount() {
+
+    if (!localStorage.reads) {
+        localStorage.reads = JSON.stringify(myReads);
+        this.setState({ reads: JSON.parse(localStorage.reads) });
+    } else {
+      this.setState({ reads: JSON.parse(localStorage.reads) });
+    }
   }
 
   searchBooks(query) {
@@ -97,6 +107,10 @@ class BooksApp extends React.Component {
     this.setState(state => ({
         reads: state.reads.concat([ book ])
       }))
+
+    var reads = JSON.parse(localStorage.reads);
+    reads.push(book);
+    localStorage.reads = JSON.stringify(reads);
   }
 
   render() {
