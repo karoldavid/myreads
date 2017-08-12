@@ -11,7 +11,7 @@ class Bookshelf extends Component {
 	render() {
 
 		const { reads, shelves } = this.props
-			console.log(reads);
+	
 		return (
 
 		   <div className="list-books">

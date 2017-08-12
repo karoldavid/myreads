@@ -6,7 +6,13 @@ import Bookshelf from './Bookshelf'
 import './App.css'
 
 const myReads = [
-    {
+  {
+      "shelf": "currentlyReading",
+      "backgroundImage": "http://books.google.com/books/content?id=Gv7oh_ukn3QC&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api",
+      "title": "A Tale for the Time Being",
+      "authors": ["Michael Crichton"]
+  },
+  {
       "shelf": "currentlyReading",
       "backgroundImage": "http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api",
       "title": "To Kill a Mockingbird",
@@ -82,9 +88,13 @@ class BooksApp extends React.Component {
   searchBooks(query) {
     if (query) {
       BooksAPI.search(query, 10).then((books) => {
-        console.log(books)
+        const isInReads = books.filter((b) => {
+          const match = this.state.reads.filter((r) => r.title === b.title);
+          return match.length === 0;
+        })
+      
         if (!books.error) {
-          this.setState({books: books})
+          this.setState({books: isInReads})
         } else {
           this.setState({books: []})
         }
@@ -95,8 +105,18 @@ class BooksApp extends React.Component {
   }
 
   updateReads(category, title) {
-    this.state.reads.filter((r) => r.title === title).map((r) => r.shelf = category);
-    this.setState({ reads: this.state.reads })
+    console.log(category);
+    if (category !== 'none') {
+      this.state.reads.filter((r) => r.title === title).map((r) => r.shelf = category);
+      this.setState({ reads: this.state.reads })
+      localStorage.reads = JSON.stringify(this.state.reads);
+    } else { 
+      const newReads = this.state.reads.filter((r) => r.title !== title);
+      this.setState({
+        reads: newReads
+      });
+      localStorage.reads = JSON.stringify(newReads);
+    }
   }
 
   addToReads(category, title) {
@@ -107,10 +127,6 @@ class BooksApp extends React.Component {
     this.setState(state => ({
         reads: state.reads.concat([ book ])
       }))
-
-    var reads = JSON.parse(localStorage.reads);
-    reads.push(book);
-    localStorage.reads = JSON.stringify(reads);
   }
 
   render() {
