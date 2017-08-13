@@ -58,14 +58,6 @@ const myReads = [
 
 class BooksApp extends React.Component {
   state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-   // showSearchPage: true,
-    //showSearchPage: false,
     shelves: [
       { "currentlyReading": "Currently Reading" },
       { "wantToRead": "Want to Read" },
@@ -76,7 +68,6 @@ class BooksApp extends React.Component {
   }
 
   componentDidMount() {
-
     if (!localStorage.reads) {
         localStorage.reads = JSON.stringify(myReads);
         this.setState({ reads: JSON.parse(localStorage.reads) });
@@ -88,12 +79,11 @@ class BooksApp extends React.Component {
   searchBooks(query) {
     if (query) {
       BooksAPI.search(query, 10).then((books) => {
-        const isInReads = books.filter((b) => {
-          const match = this.state.reads.filter((r) => r.title === b.title);
-          return match.length === 0;
-        })
-      
         if (!books.error) {
+          const isInReads = books.filter((b) => {
+            const match = this.state.reads.filter((r) => r.title === b.title);
+            return match.length === 0;
+          })
           this.setState({books: isInReads})
         } else {
           this.setState({books: []})
@@ -105,7 +95,6 @@ class BooksApp extends React.Component {
   }
 
   updateReads(category, title) {
-    console.log(category);
     if (category !== 'none') {
       this.state.reads.filter((r) => r.title === title).map((r) => r.shelf = category);
       this.setState({ reads: this.state.reads })
@@ -120,13 +109,27 @@ class BooksApp extends React.Component {
   }
 
   addToReads(category, title) {
-    var selected = this.state.books.filter((r) => r.title === title)[0];
+    const isinReads = this.state.reads.filter((r) => r.title === title);
+    if (isinReads.length === 0) {
+      var selected = this.state.books.filter((r) => r.title === title)[0];
 
-    var book = { "shelf": category, "title": selected.title, "authors" : selected.authors, "backgroundImage": selected.imageLinks.thumbnail} 
+      var book = { "shelf": category, "title": selected.title, "authors" : selected.authors, "backgroundImage": selected.imageLinks.thumbnail} 
 
-    this.setState(state => ({
-        reads: state.reads.concat([ book ])
+      const newReads = this.state.reads.concat([ book ]);
+
+      this.setState(state => ({
+          reads: newReads
       }))
+
+      const isInReads = this.state.books.filter((b) => {
+        const match = newReads.filter((r) => r.title === b.title);
+        return match.length === 0;
+      })
+
+      this.setState({ books: isInReads })
+
+      localStorage.reads = JSON.stringify(newReads);
+    }
   }
 
   render() {
