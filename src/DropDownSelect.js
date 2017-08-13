@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 
-
 class DropDownSelect extends Component {
 
 	state = {
@@ -9,9 +8,7 @@ class DropDownSelect extends Component {
 	}
 
 	handleChange(event) {
-	//	this.setState({value: event.target.value});
 		if (this.props.onChangeCategory)
-			//this.props.read.shelf = event.target.value
 			this.props.onChangeCategory(event.target.value, this.props.title)
 		if (this.props.onAddToReads)
 			this.props.onAddToReads(event.target.value, this.props.title)
@@ -26,7 +23,7 @@ class DropDownSelect extends Component {
                 <option value="read">Read</option>
                 <option value="none">None</option>
             </select>
-          </div>)
+    	</div>)
 	}
 }
 

@@ -11,7 +11,7 @@ class Bookshelf extends Component {
 	render() {
 
 		const { reads, shelves } = this.props
-	
+
 		return (
 
 		   <div className="list-books">
@@ -30,9 +30,13 @@ class Bookshelf extends Component {
                         <div className="book">
                           <div className="book-top">
                             <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${read.backgroundImage}` }}></div>
-                            <DropDownSelect category={read.shelf} title={read.title} onChangeCategory={(category, title) => {
-        						this.changeCategory(category, title)
-        					}}/>
+                            <DropDownSelect
+                            	category={read.shelf}
+                            	title={read.title}
+                            	onChangeCategory={(category, title) => {
+        							this.changeCategory(category, title)
+        						}}
+        					/>
                           </div>
                           <div className="book-title">{read.title}</div>
                           <div className="book-authors">{read.authors}</div>
