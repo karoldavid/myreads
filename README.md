@@ -1,6 +1,6 @@
 # MyReads App
 
-The MyReads Application allows to select and categorize books (read, currently reading, want to read) and emphasizes using Reac.
+The MyReads Application allows to select and categorize books (read, currently reading, want to read) and emphasizes using React.
 
 ## Getting Started
 
