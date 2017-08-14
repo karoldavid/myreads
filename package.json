@@ -1,4 +1,17 @@
 {
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/karoldavid/myreads.git"
+  },
+  "homepage": "https://karoldavid.github.io/myreads",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
+  },
   "dependencies": {
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
@@ -7,11 +20,5 @@
   },
   "devDependencies": {
     "react-scripts": "0.9.5"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
   }
 }
