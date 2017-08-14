@@ -4,14 +4,15 @@ class DropDownSelect extends Component {
 
 	state = {
 		value: this.props.category,
-		title: this.props.title
+		title: this.props.id
 	}
 
 	handleChange(event) {
 		if (this.props.onChangeCategory)
-			this.props.onChangeCategory(event.target.value, this.props.title)
+			this.props.onChangeCategory(event.target.value, this.props.id)
 		if (this.props.onAddToReads)
-			this.props.onAddToReads(event.target.value, this.props.title)
+			this.props.onAddToReads(event.target.value, this.props.id)
+		this.setState( { value: event.target.value })
 	}
 
 	render() {
@@ -21,7 +22,6 @@ class DropDownSelect extends Component {
                 <option value="currentlyReading">Currently Reading</option>
                 <option value="wantToRead">Want to Read</option>
                 <option value="read">Read</option>
-                <option value="none">None</option>
             </select>
     	</div>)
 	}

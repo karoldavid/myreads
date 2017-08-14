@@ -12,8 +12,8 @@ class BooksList extends Component {
 	    this.props.onSearchBooks(query)
 	}
 
-	addToReads(category, title) {
-		this.props.onAddToReads(category, title)
+	addToReads(category, id) {
+		this.props.onAddToReads(category, id)
 	}
 
 	render() {
@@ -38,8 +38,8 @@ class BooksList extends Component {
 	                        <div className="book">
 	                          <div className="book-top">
 	                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-	                            <DropDownSelect category={"none"} title={book.title} onAddToReads={(category, title) => {
-        							this.addToReads(category, title)
+	                            <DropDownSelect category={"none"} id={book.id} onAddToReads={(category, id) => {
+        							this.addToReads(category, id)
         						}}/>
 	                          </div>
 	                          <div className="book-title">{book.title}</div>

@@ -4,8 +4,8 @@ import DropDownSelect from './DropDownSelect'
 
 class Bookshelf extends Component {
 
-	changeCategory(category, title) {
-		this.props.onChangeCategory(category, title)
+	changeCategory(category, id) {
+		this.props.onChangeCategory(category, id)
 	}
 
 	render() {
@@ -29,14 +29,10 @@ class Bookshelf extends Component {
                       <li key={index}>
                         <div className="book">
                           <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${read.backgroundImage}` }}></div>
-                            <DropDownSelect
-                            	category={read.shelf}
-                            	title={read.title}
-                            	onChangeCategory={(category, title) => {
-        							this.changeCategory(category, title)
-        						}}
-        					/>
+                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${read.imageLinks.smallThumbnail}` }}></div>
+                            <DropDownSelect category={read.shelf} id={read.id} onChangeCategory={(category, id) => {
+        						this.changeCategory(category, id)
+        					}}/>
                           </div>
                           <div className="book-title">{read.title}</div>
                           <div className="book-authors">{read.authors}</div>
