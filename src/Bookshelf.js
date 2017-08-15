@@ -1,50 +1,40 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
-import DropDownSelect from './DropDownSelect'
+import Shelf from './Shelf'
 
 class Bookshelf extends Component {
 
-	changeCategory(category, id) {
-		this.props.onChangeCategory(category, id)
+	changeCategory(shelf, id) {
+		this.props.onChangeCategory(shelf, id)
 	}
 
 	render() {
 
-		const { reads, shelves } = this.props
+		const shelves = [
+			{ "currentlyReading": "Currently Reading" },
+			{ "wantToRead": "Want to Read" },
+      		{ "read": "Read" }
+    	];
+
+		const { reads } = this.props
 
 		return (
 
 		   <div className="list-books">
             <div className="list-books-title">
               <h1>MyReads</h1>
+              {shelves.map((shelf, index) => (
+              	<Shelf
+              		key={index}
+              	 	shelf={shelf}
+              		reads={reads.filter((r) => r.shelf === Object.keys(shelf)[0])}
+              		onChangeCategory={(shelf, id) => {
+              			this.changeCategory(shelf, id)
+              		}}
+              	/>
+          	   ))}
             </div>
-            <div className="list-books-content">
-            	{ shelves.map((shelf, index) => (
-              <div key={index}>
-                <div className="bookshelf">
-                  <h2 className="bookshelf-title">{Object.values(shelf)[0]}</h2>
-                  <div className="bookshelf-books">
-                    <ol className="books-grid">
-                    { reads.filter(read => read.shelf === Object.keys(shelf)[0]).map((read, index) => (
-                      <li key={index}>
-                        <div className="book">
-                          <div className="book-top">
-                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${read.imageLinks.smallThumbnail}` }}></div>
-                            <DropDownSelect category={read.shelf} id={read.id} onChangeCategory={(category, id) => {
-        						this.changeCategory(category, id)
-        					}}/>
-                          </div>
-                          <div className="book-title">{read.title}</div>
-                          <div className="book-authors">{read.authors}</div>
-                        </div>
-                      </li>
-                  	))}
-                    </ol>
-                  </div>
-                </div>
-              </div>
-              ))}
-            </div>
+ 
             <div className="open-search">
               <Link to="/search">Add a book</Link>
             </div>

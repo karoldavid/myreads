@@ -1,6 +1,6 @@
 import React, { Component} from 'react'
 import { Link } from 'react-router-dom'
-import DropDownSelect from './DropDownSelect'
+import Book from './Book'
 
 class BooksList extends Component {
 	state = {
@@ -12,8 +12,8 @@ class BooksList extends Component {
 	    this.props.onSearchBooks(query)
 	}
 
-	addToReads(category, id) {
-		this.props.onAddToReads(category, id)
+	addToReads(shelf, id) {
+		this.props.onAddToReads(shelf, id)
 	}
 
 	render() {
@@ -34,18 +34,14 @@ class BooksList extends Component {
 	        <div className="search-books-results">
 	            <ol className="books-grid">
 	        	    { books.map((book, index) => (
-	                    <li key={index}>
-	                        <div className="book">
-	                          <div className="book-top">
-	                            <div className="book-cover" style={{ width: 128, height: 193, backgroundImage: `url(${book.imageLinks.smallThumbnail})` }}></div>
-	                            <DropDownSelect category={"none"} id={book.id} onAddToReads={(category, id) => {
-        							this.addToReads(category, id)
-        						}}/>
-	                          </div>
-	                          <div className="book-title">{book.title}</div>
-	                          <div className="book-authors">{book.authors}</div>
-	                        </div>
-	                    </li>
+	        	    	<Book
+                     		key={index}
+                     		read={book}
+                     		index={index}
+                     		onChangeCategory={(shelf, id) => {
+              					this.addToReads(shelf, id)
+              				}}
+                     	/>
 	                ))}
 	              </ol>
 	            </div>

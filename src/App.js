@@ -8,11 +8,6 @@ import './App.css'
 
 class BooksApp extends React.Component {
   state = {
-    shelves: [
-      { "currentlyReading": "Currently Reading" },
-      { "wantToRead": "Want to Read" },
-      { "read": "Read" }
-    ],
     reads: [],
     books: []
   }
